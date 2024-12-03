@@ -36,6 +36,10 @@ dependencies:
   cupertino_icons: ^1.0.8
   hive_flutter: ^1.1.0
   firebase_core: ^3.8.0
+  cloud_firestore: ^5.5.0
+  uuid: ^4.5.1
+  numberpicker: ^2.1.2
+  flutter_pannable_rating_bar: ^2.7.2+1
 
 dev_dependencies:
   flutter_test:

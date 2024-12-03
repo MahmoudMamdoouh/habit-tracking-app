@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:uuid/uuid.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -175,9 +176,15 @@ class _SignupState extends State<Signup> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState?.validate() ?? false) {
+                        var id = Uuid().v1();
                         _boxAccounts.put(
                           _controllerUsername.text,
                           _controllerConFirmPassword.text,
+                        );
+
+                        _boxAccounts.put(
+                          '${_controllerUsername.text}ID',
+                          id,
                         );
 
                         ScaffoldMessenger.of(context).showSnackBar(
