@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:habit_tracking/firebase_options.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class Helpers {
@@ -11,6 +13,10 @@ class Helpers {
 
   static Future<void> initApp() async {
     await initHive();
+
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
   }
 
   static Future<void> initHive() async {
