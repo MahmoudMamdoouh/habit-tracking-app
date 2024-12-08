@@ -1,0 +1,50 @@
+name: Flutter CI/CD
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.2'
+          channel: 'stable'
+
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Build AppBundle
+        run: flutter build appbundle --release
+
+      - name: Build iOS
+        run: flutter build ios --release --no-codesign
+
+      - name: Upload APK to GitHub Releases
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Upload AppBundle to GitHub Releases
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: build/app/outputs/bundle/release/app-release.aab
+
+      - name: Upload IPA to GitHub Releases
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: build/ios/ipa/*.ipa
